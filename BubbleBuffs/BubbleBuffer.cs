@@ -206,7 +206,7 @@ namespace BubbleBuffs {
             ToggleButton = GameObject.Instantiate(transform.Find("MainContainer/MetamagicButton").gameObject, transform);
             (ToggleButton.transform as RectTransform).anchoredPosition = new Vector2(1400, 0);
             ToggleButton.name = "bubblebuff-toggle";
-            ToggleButton.GetComponentInChildren<TextMeshProUGUI>().text = "Buff Setup";
+            ToggleButton.GetComponentInChildren<TextMeshProUGUI>().text = "设置一键Buff";
 
             {
                 var button = ToggleButton.GetComponentInChildren<OwlcatButton>();
@@ -563,10 +563,10 @@ namespace BubbleBuffs {
             search = new SearchBar(filterRect, "...", false, "bubble-search-buff");
 
             const float scale = 1.0f;
-            GameObject showHidden = MakeToggle(togglePrefab, filterRect, 0.8f, .5f, "Show hidden", "bubble-toggle-show-hidden", scale);
-            GameObject showShort = MakeToggle(togglePrefab, filterRect, .8f, .5f, "Show round/level", "bubble-toggle-show-short", scale);
-            GameObject showRequested = MakeToggle(togglePrefab, filterRect, .8f, .5f, "Show requested", "bubble-toggle-show-requested", scale);
-            GameObject showNotRequested = MakeToggle(togglePrefab, filterRect, .8f, .5f, "Show NOT requested", "bubble-toggle-show-not-requested", scale);
+            GameObject showHidden = MakeToggle(togglePrefab, filterRect, 0.8f, .5f, "显示隐藏", "bubble-toggle-show-hidden", scale);
+            GameObject showShort = MakeToggle(togglePrefab, filterRect, .8f, .5f, "显示轮级", "bubble-toggle-show-short", scale);
+            GameObject showRequested = MakeToggle(togglePrefab, filterRect, .8f, .5f, "已设置Buff的", "bubble-toggle-show-requested", scale);
+            GameObject showNotRequested = MakeToggle(togglePrefab, filterRect, .8f, .5f, "未设置Buff的", "bubble-toggle-show-not-requested", scale);
 
             search.InputField.onValueChanged.AddListener(val => {
                 NameFilter.Value = val;
@@ -579,10 +579,10 @@ namespace BubbleBuffs {
             CurrentCategory = new ButtonGroup<Category>(categoryRect);
             CurrentCategory.Selected.Subscribe<Category>(_ => RefreshFiltering());
 
-            CurrentCategory.Add(Category.Spell, "Spells");
-            CurrentCategory.Add(Category.Ability, "Abilities");
-            CurrentCategory.Add(Category.Item, "Items");
-            CurrentCategory.Add(Category.Consumable, "Consumables");
+            CurrentCategory.Add(Category.Spell, "法术");
+            CurrentCategory.Add(Category.Ability, "特殊能力");
+            CurrentCategory.Add(Category.Item, "物品能力");
+            CurrentCategory.Add(Category.Consumable, "消耗品");
 
 
             ShowShort.BindToView(showShort);
@@ -684,14 +684,14 @@ namespace BubbleBuffs {
                 return labelRoot;
             }
 
-            var hideSpell = MakeToggle(togglePrefab, detailsRect.transform, 0.03f, 0.8f, "Hide Ability", "hide-spell");
+            var hideSpell = MakeToggle(togglePrefab, detailsRect.transform, 0.03f, 0.8f, "隐藏该法术", "hide-spell");
             hideSpell.transform.SetSiblingIndex(0);
             hideSpell.SetActive(false);
             hideSpell.Rect().pivot = new Vector2(0, 0.5f);
             var hideSpellToggle = hideSpell.GetComponentInChildren<ToggleWorkaround>();
 
             view.addToAll = GameObject.Instantiate(buttonPrefab, detailsRect);
-            view.addToAll.GetComponentInChildren<TextMeshProUGUI>().text = "Add To All";
+            view.addToAll.GetComponentInChildren<TextMeshProUGUI>().text = "施放给每个人";
             var addToAllRect = view.addToAll.transform as RectTransform;
             addToAllRect.localPosition = Vector3.zero;
             addToAllRect.anchoredPosition = Vector3.zero;
@@ -700,7 +700,7 @@ namespace BubbleBuffs {
             addToAllRect.SetAnchor(0.03f, 0.1f);
 
             view.removeFromAll = GameObject.Instantiate(view.addToAll, detailsRect);
-            view.removeFromAll.GetComponentInChildren<TextMeshProUGUI>().text = "Remove From All";
+            view.removeFromAll.GetComponentInChildren<TextMeshProUGUI>().text = "取消施放每人";
             var removeFromAllRect = view.removeFromAll.transform as RectTransform;
             removeFromAllRect.SetAnchor(0.03f, 0.3f);
 
@@ -732,11 +732,11 @@ namespace BubbleBuffs {
 
 
 
-            var capLabel = MakeLabel("  Limit casts to");
+            var capLabel = MakeLabel("  限制次数为");
 
-            var (blacklistToggle, _) = MakePopoutToggle("Ban from casting");
-            var (powerfulChangeToggle, powerfulChangeLabel) = MakePopoutToggle("Use 'Powerful Change'");
-            var (shareTransmutationToggle, shareTransmutationLabel) = MakePopoutToggle("Allow 'Share Transmutation'");
+            var (blacklistToggle, _) = MakePopoutToggle("禁止施放");
+            var (powerfulChangeToggle, powerfulChangeLabel) = MakePopoutToggle("使用'强力变形'（鬃毛）");
+            var (shareTransmutationToggle, shareTransmutationLabel) = MakePopoutToggle("允许'分享变化'（鬃毛）");
             var defaultLabelColor = shareTransmutationLabel.color;
 
             (ToggleWorkaround, TextMeshProUGUI) MakePopoutToggle(string text) {
@@ -749,7 +749,7 @@ namespace BubbleBuffs {
                 return (toggleObj.GetComponentInChildren<ToggleWorkaround>(), label);
 
             }
-            MakeLabel("  <i>Arcane Resevoir resource is <b>not</b> tracked</i>");
+            MakeLabel("  <i><b>未侦测到</b>奥法源泉</i>");
 
             float capChangeScale = 0.7f;
             var decreaseCustomCap = GameObject.Instantiate(expandButtonPrefab, capLabel.transform);
@@ -869,9 +869,9 @@ namespace BubbleBuffs {
 
             var buffGroup = new ButtonGroup<BuffGroup>(groupRect);
 
-            buffGroup.Add(BuffGroup.Long, "Normal");
-            buffGroup.Add(BuffGroup.Important, "Important");
-            buffGroup.Add(BuffGroup.Short, "Short");
+            buffGroup.Add(BuffGroup.Long, "常用");
+            buffGroup.Add(BuffGroup.Important, "重要");
+            buffGroup.Add(BuffGroup.Short, "短时");
 
             buffGroup.Selected.Subscribe<BuffGroup>(g => {
                 if (view.Get(out var buff)) {
@@ -906,7 +906,7 @@ namespace BubbleBuffs {
                     if (who.MaxCap < 100)
                         capValueText.text = $"{actualCap}/{who.MaxCap}";
                     else
-                        capValueText.text = $"at will";
+                        capValueText.text = $"无限";
 
                     blacklistToggle.isOn = who.Banned;
                     shareTransmutationToggle.isOn = who.ShareTransmutation;
@@ -1181,16 +1181,16 @@ namespace BubbleBuffs {
         }
 
         public override IEnumerable<ITooltipBrick> GetHeader(TooltipTemplateType type) {
-            yield return new TooltipBrickEntityHeader("BubbleBuff results", null);
+            yield return new TooltipBrickEntityHeader("一键Buff 结果", null);
             yield break;
         }
         public override IEnumerable<ITooltipBrick> GetBody(TooltipTemplateType type) {
             List<ITooltipBrick> elements = new();
-            AddResultsNoMessages("Buffs Applied", elements, good);
-            AddResultsNoMessages("Buffs Skipped", elements, skipped);
+            AddResultsNoMessages("已生效", elements, good);
+            AddResultsNoMessages("已跳过", elements, skipped);
 
             if (!bad.Empty()) {
-                elements.Add(new TooltipBrickTitle("Buffs Failed"));
+                elements.Add(new TooltipBrickTitle("Buff失败"));
                 elements.Add(new TooltipBrickSeparator());
 
                 foreach (var r in bad) {
@@ -1356,9 +1356,9 @@ namespace BubbleBuffs {
 
                 }
 
-                AddButton("Buff Normal!", "Try to cast spells set in the buff window (Normal)", applyBuffsSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Long));
-                AddButton("Buff Important!", "Try to cast spells set in the buff window (Important)", applyBuffsImportantSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Important));
-                AddButton("Buff Short!", "Try to cast spells set in the buff window (Short)", applyBuffsShortSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Short));
+                AddButton("一键Buff（常用）!", "施放设置好的buff组（常用）", applyBuffsSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Long));
+                AddButton("一键Buff（重要）!", "施放设置好的buff组（重要）", applyBuffsImportantSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Important));
+                AddButton("一键Buff（短时）!", "施放设置好的buff组（短时）", applyBuffsShortSprites, () => GlobalBubbleBuffer.Execute(BuffGroup.Short));
 
                 Main.Verbose("remove old bubble?");
 #if debug
@@ -1733,9 +1733,9 @@ namespace BubbleBuffs {
                             return;
                         var (availNormal, availSelf) = buff.AvailableAndSelfOnly;
                         if (availNormal < 100)
-                            label.text = $"casting: {buff.Fulfilled}/{buff.Requested} + available: {availNormal}+{availSelf}";
+                            label.text = $"记录了: {buff.Fulfilled}/{buff.Requested} + 剩余: {availNormal}+{availSelf}";
                         else
-                            label.text = $"casting: {buff.Fulfilled}/{buff.Requested} + available: at will";
+                            label.text = $"记录了: {buff.Fulfilled}/{buff.Requested} + 剩余: 无限次";
                         if (buff.Requested > 0) {
                             if (buff.Fulfilled != buff.Requested) {
                                 textImage.color = Color.red;

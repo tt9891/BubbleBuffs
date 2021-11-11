@@ -206,7 +206,7 @@ namespace BubbleBuffs {
 
             BubbleBuffGlobalController.Instance.CastSpells(tasks);
 
-            var messageString = $"Buffed {buffGroup}! Applied {actuallyCast}/{attemptedCasts} (skipped: {skippedCasts})";
+            var messageString = $"一键Buff {buffGroup}! 已生效 {actuallyCast}/{attemptedCasts} (已跳过: {skippedCasts})";
             Main.Verbose(messageString);
 
             var message = new CombatLogMessage(messageString, Color.blue, PrefixIcon.RightArrow, tooltip, true);

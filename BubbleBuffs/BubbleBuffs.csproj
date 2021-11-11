@@ -108,11 +108,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>D:\steamlib\steamapps\common\Pathfinder Second Adventure\Wrath_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:\steamlib\steamapps\common\Pathfinder Second Adventure\Wrath_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -138,11 +138,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>D:\steamlib\steamapps\common\Pathfinder Second Adventure\Wrath_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>D:\steamlib\steamapps\common\Pathfinder Second Adventure\Wrath_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.InputModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
@@ -221,6 +221,6 @@
     <Error Condition="!Exists('..\packages\Aze.Publicise.MSBuild.Task.1.0.0\build\Aze.Publicise.MSBuild.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Aze.Publicise.MSBuild.Task.1.0.0\build\Aze.Publicise.MSBuild.Task.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>(robocopy "$(TargetDir) " "$(WrathPathDebug)\Mods\BubbleBuffs\ " /s /e )^&amp; IF %25ERRORLEVEL%25 LEQ 1 exit 0</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)" "$(WrathPathDebug)\Mods\BubbleBuffs\" /s /e</PostBuildEvent>
   </PropertyGroup>
 </Project>

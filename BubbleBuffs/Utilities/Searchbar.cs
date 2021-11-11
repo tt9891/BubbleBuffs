@@ -78,7 +78,7 @@ namespace BubbleBuffs.Utilities {
 
         public void UpdatePlaceholder()
         {
-            PlaceholderText.text = string.IsNullOrEmpty(InputField.text) ? "Search..." : InputField.text;
+            PlaceholderText.text = string.IsNullOrEmpty(InputField.text) ? "搜索..." : InputField.text;
         }
 
         private void OnDropdownButton()

@@ -134,7 +134,7 @@ namespace BubbleBuffs {
                     RestController.ApplyRest(unit);
             }
             if (Input.GetKeyDown(KeyCode.B) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
-                modEntry.GetType().GetMethod("Reload", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(modEntry, new object[] {});
+                modEntry.GetType().GetMethod("重载", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(modEntry, new object[] {});
             }
 #endif
         }
